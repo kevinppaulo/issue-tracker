@@ -23,28 +23,32 @@ public class ApplicationSecurityConfigurer extends WebSecurityConfigurerAdapter 
 	@Autowired
 	public ApplicationSecurityConfigurer(PasswordEncoder passwordEncoder,
 			ApplicationUserDetailsService userDetailsService) {
-		super();
 		this.passwordEncoder = passwordEncoder;
 		this.userDetailsService = userDetailsService;
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// TODO Auto-generated method stub
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.GET,"/signup", "/signup/**", "/css/**", "/js/**").permitAll()
-			.antMatchers(HttpMethod.POST,"/signup", "/signup/**").permitAll()
-			.antMatchers("/h2-console/**").permitAll()
+			.antMatchers(HttpMethod.GET,"/signup", "/signup/**", "/css/**", "/js/**", "/h2-console/**").permitAll()
+			.antMatchers(HttpMethod.POST,"/signup", "/signup/**", "/h2-console/**").permitAll()
 			.anyRequest()
 			.authenticated()
 			.and()
 			.formLogin()
-			.defaultSuccessUrl("/dashboard");
+			.loginPage("/login").permitAll()
+			.defaultSuccessUrl("/userOrganizationCheck", true)
+			.and()
+			.logout()
+				.logoutUrl("/logout").permitAll()
+				.clearAuthentication(true)
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
+				.logoutSuccessUrl("/login");
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// TODO Auto-generated method stub
 		auth.authenticationProvider(daoAuthenticationProvider());
 	}
 
