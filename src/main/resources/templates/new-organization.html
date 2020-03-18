@@ -8,7 +8,30 @@
 <body>
 	<th:block th:include="fragments/navbar::navbar"></th:block>
 		
-	<h1>New organization</h1>
+	<div class="container w-100 h-100">
+		<div class="card m-auto" style="width: 80%; max-width: 600px;" >			
+			<div class="card-body">
+			<h3 class="card-title">Create a new organization</h3>
+			
+			<p>All your issues will be tied to this organization. In future releases, we'll allow you to create and manage multiple organizations.</p>
+			
+			<form method="post" th:action="@{/organization/new}">
+				<div class="form-group">
+					<label for="name">Organization name</label>
+					<input type="text" class="form-control" name="name" id="name">
+				</div>
+				
+				
+				<div class="form-group">
+					<label for="description">Description (optional)</label>
+					<input type="text" class="form-control" name="description" id="description">
+				</div>
+
+				<button type="submit" class="btn btn-primary btn-block">Sign in</button>
+			</form>
+			
+		</div>
+	</div>
 	
 	<th:block th:include="fragments/bootstrap-js::bootstrap-js"></th:block>
 </body>

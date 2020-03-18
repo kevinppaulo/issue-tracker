@@ -3,12 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <th:block th:include="fragments/bootstrap-css::bootstrap-css"></th:block>
-<title>Sign Up</title>
+<title th:text="${'Issue tracker - ' + user.organization.name}"></title>
 </head>
 <body>
 	<th:block th:include="fragments/navbar::navbar"></th:block>
 		
-	<h1>Hello Word</h1>
+	<div th:if="${#lists.isEmpty(user.organization.issues)}">
+		<div class="mt-5 d-flex flex-column justify-content-center align-items-center">
+			<h2 th:text="${'Hurray! Looks like ' + user.organization.name +' has no issues.'}"></h2>
+			<img src="/img/chilling.svg" style="max-width: 200px; width: 100%; height: auto"/>
+		</div>
+	</div>
+	
+	
+	
+	
+	<div th:if="${user.organization.issues != null}">
+		<div class="container d-flex flex-column  justify-content-flex-start align-items-stretch" style="width: 100%; max-width: 600px">
+			<div th:each="issue: ${user.organization.issues}">
+				<div class="card border-danger mb-3">
+				  <div class="card-header" th:text="Issue"></div>
+				  <div class="card-body">
+				    <h4 class="card-title" th:text="${issue.title}"></h4>
+				    <p class="card-text" th:text="${issue.description}"></p>
+				  </div>
+				</div>
+			</div>
+		</div>
+	
+	
+	</div>
 	
 	<th:block th:include="fragments/bootstrap-js::bootstrap-js"></th:block>
 </body>

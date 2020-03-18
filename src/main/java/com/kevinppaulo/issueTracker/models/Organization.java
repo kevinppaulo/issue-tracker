@@ -21,9 +21,13 @@ public class Organization {
 	@Id
 	@GeneratedValue
 	private Long organizationId;
-	private String organizationName;
+	private String name;
 	private String description;
 	@OneToMany
 	private List<Issue> issues;
+	
+	public void addIssue(Issue issue) {
+		issues.add(issue);
+	}
 	
 }

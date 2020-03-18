@@ -5,33 +5,38 @@
 <title>Insert title here</title>
 </head>
 <body th:fragment="navbar">
-	<nav class="navbar mb-3 navbar-expand-lg navbar-dark bg-primary">
 
-		<a class="navbar-brand" href="#"><b>Issue Tracker</b></a>
+	<nav class="navbar mb-3 navbar-expand-sm navbar-dark bg-primary">
 
+		<a class="navbar-brand" href="#">Issue Tracker</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
+			data-target="#navbarSupportedContent" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item active"><a class="nav-link" href="#">Home</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+			
+			
+				<li class="nav-item ">
+					<a class="nav-link" href="/app">Home
+						<span class="sr-only">(current)</span>
+					</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Organizations</a>
-				</li>
-				<li class="nav-item"><a class="nav-link" href="#">All
-						Issues</a></li>
+			
 			</ul>
-
-			<button class="btn btn-outline-light">New Issue</button>
-			<form method="post" th:action="@{/logout}">
+			
+			<div th:if="${user != null}">
+				<a class="btn btn-warning mr-2" th:href="@{'/organization/' + ${user.organization.organizationId} + '/issues/new'}">New Issue</a>
+			</div>
+			
+			<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
 				<button class="btn btn-outline-light" type="submit">log out</button>
 			</form>
+			
 		</div>
-
-
 	</nav>
+	
 </body>
 </html>
