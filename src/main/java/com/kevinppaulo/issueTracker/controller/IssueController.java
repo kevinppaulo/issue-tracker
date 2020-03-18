@@ -23,7 +23,7 @@ import com.kevinppaulo.issueTracker.repository.IssueJpaRepository;
 import com.kevinppaulo.issueTracker.repository.OrganizationJpaRepository;
 
 @Controller
-@RequestMapping("/organization/{organizationId}/issues")
+@RequestMapping("/issues")
 public class IssueController {
 	
 	private final OrganizationJpaRepository organizationRepo;
@@ -38,35 +38,12 @@ public class IssueController {
 		this.issueRepo = issueRepo;
 	}
 
-	@GetMapping("")
-	public ModelAndView allOrganizationIssues() {
-		ModelAndView mv = new ModelAndView("organization-issues");
+	@GetMapping("/{issueId}")
+	public ModelAndView issueDetails(@PathVariable("issueId") Long issueId) {
+		ModelAndView mv = new ModelAndView("issue-details");
+		Issue issue = issueRepo.findById(issueId).orElseThrow(RuntimeException::new);
+		mv.addObject("issue", issue);
 		return mv;
-	}
-	
-	@GetMapping("/new")
-	public ModelAndView getAddNewIssue(Principal principal) {
-		ModelAndView mv = new ModelAndView("new-issue");
-		ApplicationUser user = userRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
-		mv.addObject("user", user);
-		return mv;
-	}
-	
-	@PostMapping("/new")
-	public String postAddNewIssue(@PathVariable("organizationId") Long organizationId,  @Valid Issue issue, BindingResult result, Principal principal) {
-		if(result.hasErrors()) {
-			return "redirect:/organization/" + organizationId + "/issues/new";
-		}
-		
-		issue.setIssueStatus(IssueStatus.OPEN);
-		issue.setCreatedAt(new Date());
-		Organization organization = organizationRepo.findById(organizationId).orElseThrow(RuntimeException::new);
-		organization.addIssue(issue);
-		issueRepo.save(issue);
-		organizationRepo.save(organization);
-		
-		System.out.println(organization);
-		return "redirect:/app";
 	}
 
 }

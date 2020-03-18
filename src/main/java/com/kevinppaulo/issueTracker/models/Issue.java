@@ -3,6 +3,7 @@ package com.kevinppaulo.issueTracker.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ public class Issue {
 	@GeneratedValue
 	private Long issueId;
 	private String title;
+	@Column(length = 10000)
 	private String description;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;

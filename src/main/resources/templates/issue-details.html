@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<th:block th:include="fragments/bootstrap-css::bootstrap-css"></th:block>
+<title>Sign Up</title>
+</head>
+<body>
+	<th:block th:include="fragments/navbar::navbar"></th:block>
+		
+	<div class="container mt-5 pb-5">
+		<h4 class="display-4">
+			<span th:text="${issue.title}"></span>
+		</h4>
+		<h6 class="text-muted" th:text="${'Issue opened in '+#dates.format(issue.createdAt, 'dd/MM/yyyy - HH:mm:ss')}"></h6>
+		<small>Status: </small>
+		<span th:class="${'badge badge-pill badge-'+issue.badgeColor}" th:text="${issue.issueStatus}"></span>
+		<hr/>
+		<p th:text="${issue.description}"></p>
+		<hr/>
+		<h5>Comments</h5>
+		<form method="post" th:action="@{'/issues/'+${issue.issueId} + '/comments'}">
+			<textarea rows="5" style="width: 100%" placeholder="Lorem ipsum dolor sid amet"></textarea>
+			<button class="btn btn-primary">Submit</button>
+		</form>
+		
+		<section>
+		
+			<div class=" mt-5 d-flex flex-column align-items-center justify-content-center" th:if="${#lists.isEmpty(issue.comments)}">
+			
+				<h4>Looks like no one is talking about this...</h4>
+				<img src="/img/public_discussion.svg" style="width: 80%; max-width: 300px">
+			
+			</div>
+		
+		</section>
+		
+		
+		
+	</div>
+	
+	<th:block th:include="fragments/bootstrap-js::bootstrap-js"></th:block>
+</body>
+</html>

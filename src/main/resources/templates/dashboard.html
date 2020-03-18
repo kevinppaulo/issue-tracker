@@ -33,9 +33,9 @@
 				<tr th:each="issue: ${user.organization.issues}">
 					<td th:text="${'#'+issue.issueId}"></td>
 					<td><a th:href="@{'/issues/' + ${issue.issueId}}" th:text="${issue.title}"></a></td>
-					<td th:text="${issue.description}"></td>
-					<td th:text="${#dates.format(issue.createdAt, 'dd/mm/yyyy')}"></td>
-					<td th:text="${issue.lastUpdated} ? ${#dates.format(issue.lastUpdated, 'dd/mm/yyyy')} : 'never'"></td>
+					<td th:text="${#strings.abbreviate(issue.description, 70)}"></td>
+					<td th:text="${#dates.format(issue.createdAt, 'dd/MM/yyyy')}"></td>
+					<td th:text="${issue.lastUpdated} ? ${#dates.format(issue.lastUpdated, 'dd/MM/yyyy')} : 'never'"></td>
 					<td><span th:class="${'badge badge-pill badge-'+issue.badgeColor}" th:text="${issue.issueStatus}"></span></td>			
 				</tr>
 			</tbody>
