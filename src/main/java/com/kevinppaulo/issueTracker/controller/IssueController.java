@@ -1,6 +1,7 @@
 package com.kevinppaulo.issueTracker.controller;
 
 import java.security.Principal;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kevinppaulo.issueTracker.models.ApplicationUser;
 import com.kevinppaulo.issueTracker.models.Issue;
+import com.kevinppaulo.issueTracker.models.IssueStatus;
 import com.kevinppaulo.issueTracker.models.Organization;
 import com.kevinppaulo.issueTracker.repository.ApplicationUserJpaRepository;
 import com.kevinppaulo.issueTracker.repository.IssueJpaRepository;
@@ -55,6 +57,9 @@ public class IssueController {
 		if(result.hasErrors()) {
 			return "redirect:/organization/" + organizationId + "/issues/new";
 		}
+		
+		issue.setIssueStatus(IssueStatus.OPEN);
+		issue.setCreatedAt(new Date());
 		Organization organization = organizationRepo.findById(organizationId).orElseThrow(RuntimeException::new);
 		organization.addIssue(issue);
 		issueRepo.save(issue);

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,4 +36,22 @@ public class Issue {
 	private IssueStatus issueStatus;
 	@OneToMany
 	private List<Comment> comments;
+	
+	@Transient
+	private String badgeColor;
+	
+	public String getBadgeColor() {
+		switch(this.issueStatus) {
+		case OPEN:
+			return "danger";
+		case IN_ANALISYS:
+			return "warning";
+		case IN_PROGRESS:
+			return "info";
+		case CLOSED:
+			return "success";
+		default:
+			return "danger";
+		}
+	}
 }

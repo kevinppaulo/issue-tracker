@@ -8,12 +8,9 @@
 <body>
 	<th:block th:include="fragments/navbar::navbar"></th:block>
 	
-	
-	
 	<div class="card ml-auto mt-5 mr-auto" style="width: 18rem;">
 		<div class="card-body">
 			<h4 class="card-title">New Issue</h4>
-			
 			
 			<form method="post" autocomplete="off" th:action="@{'/organization/' + ${user.organization.organizationId} + '/issues/new'}" role="form">
 				<div class="form-group">
@@ -30,7 +27,6 @@
 			</form>
 		</div>
 	</div>
-		
 	
 	<th:block th:include="fragments/bootstrap-js::bootstrap-js"></th:block>
 </body>
