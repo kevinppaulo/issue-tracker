@@ -110,6 +110,11 @@
     		form.submit();
 		});
 		
+		$("#titleForm input[name='title']").on("blur", ()=>{
+    		const form = document.getElementById("titleForm");
+    		form.submit();
+		});
+		
 		$('#editBtn').click(()=>{
 			$("#description-area").hide();
 			$("#description-form-area").show();
