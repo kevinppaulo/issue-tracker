@@ -10,7 +10,16 @@
 
 	<div class="container mt-5 pb-5">
 		<h4 class="display-4">
-			<span th:text="${issue.title}"></span>
+			<div class="form-inline">
+			<form id="titleForm" method="post" th:action="@{'/issues/' + ${issue.issueId} + '/edit'}">
+				<input class="border-left-0 border-top-0 border-right-0" type="text" name="title" th:value="${issue.title}">
+				<input type="hidden" name="issueStatus" th:value="${issue.issueStatus}">
+					
+				<input type="hidden" name="issueId" th:value="${issue.issueId}">
+				<input type="hidden" name="description" th:value="${issue.description}">
+			</form>
+		</div>
+			
 		</h4>
 		<h6 class="text-muted"
 			th:text="${'Issue opened in '+#dates.format(issue.createdAt, 'dd/MM/yyyy - HH:mm:ss')}"></h6>
@@ -28,8 +37,29 @@
 				<input type="hidden" name="description" th:value="${issue.description}">
 			</form>
 		</div>
+		
 		<hr />
-		<p th:text="${issue.description}"></p>
+		
+
+		<div id="description-area">
+			<p th:text="${issue.description}"></p>
+			<button id="editBtn" class="btn btn-primary mb-2">Edit</button>
+		</div>		
+		
+		<div id="description-form-area"  class="form-group" style="display: none">
+			<form id="descriptionForm" method="post" th:action="@{'/issues/' + ${issue.issueId} + '/edit'}">
+				<input type="hidden" name="issueStatus" th:value="${issue.issueStatus}">
+				<input type="hidden" name="issueId" th:value="${issue.issueId}">
+				<input type="hidden" name="title" th:value="${issue.title}">
+				<textarea class="input-group" name="description" th:text="${issue.description}">
+				</textarea>
+				<button type="submit" class="btn btn-primary mt-2">Submit</button>
+				<button id="cancelEditBtn" type="button" class="btn btn-secondary mt-2">cancel</button>
+			</form>
+		</div>
+		
+		
+		
 		<hr />
 		
 		<h5>Comments</h5>
@@ -78,6 +108,16 @@
 		$("#status-select").on("change", ()=>{
     		const form = document.getElementById("statusForm");
     		form.submit();
+		});
+		
+		$('#editBtn').click(()=>{
+			$("#description-area").hide();
+			$("#description-form-area").show();
+		});
+		
+		$('#cancelEditBtn').click(()=>{
+			$("#description-area").show();
+			$("#description-form-area").hide();
 		});
 	</script>
 	
