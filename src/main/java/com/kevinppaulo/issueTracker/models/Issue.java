@@ -43,15 +43,15 @@ public class Issue {
 	public String getBadgeColor() {
 		switch(this.issueStatus) {
 		case OPEN:
-			return "danger";
+			return "primary";
 		case IN_ANALISYS:
 			return "warning";
 		case IN_PROGRESS:
 			return "info";
 		case CLOSED:
-			return "success";
+			return "secondary";
 		default:
-			return "danger";
+			return "primary";
 		}
 	}
 }

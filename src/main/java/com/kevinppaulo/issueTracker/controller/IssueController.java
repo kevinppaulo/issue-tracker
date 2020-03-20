@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -56,6 +57,27 @@ public class IssueController {
 		mv.addObject("issue", issue);
 		mv.addObject("comments", comments);
 		return mv;
+	}
+	
+	
+	@PostMapping("/{issueId}/edit")
+	public String editIssue(@PathVariable("issueId") Long issueId, @Valid Issue issue, BindingResult bindingResult, Principal principal) {
+		if(bindingResult.hasErrors()) {
+			//TODO: actually do something here...
+			System.out.println(bindingResult.getAllErrors());
+			System.out.println("Errors were found");
+			return "redirect:/issues/"+issueId;
+		}
+		
+		Issue originalIssue = issueRepo.findById(issueId).orElseThrow(RuntimeException::new);
+		issue.setIssueId(originalIssue.getIssueId());
+		issue.setCreatedAt(originalIssue.getCreatedAt());
+		issue.setLastUpdated(new Date());
+		if(issue.getIssueStatus() == IssueStatus.CLOSED) {
+			issue.setClosedAt(new Date());
+		}
+		issueRepo.save(issue);
+		return "redirect:/issues/"+issueId;
 	}
 	
 	
