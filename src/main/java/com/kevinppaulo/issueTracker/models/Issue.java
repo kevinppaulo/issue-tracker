@@ -36,8 +36,6 @@ public class Issue {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdated;
 	private IssueStatus issueStatus;
-	@OneToMany
-	private List<Comment> comments;
 	
 	@Transient
 	private String badgeColor;
