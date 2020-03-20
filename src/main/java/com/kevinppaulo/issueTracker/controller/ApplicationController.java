@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kevinppaulo.issueTracker.models.ApplicationUser;
+import com.kevinppaulo.issueTracker.models.Organization;
 import com.kevinppaulo.issueTracker.repository.ApplicationUserJpaRepository;
 
 @Controller
@@ -21,6 +22,14 @@ public class ApplicationController {
 	public ApplicationController(ApplicationUserJpaRepository appUserRepo) {
 		super();
 		this.appUserRepo = appUserRepo;
+	}
+	
+	@GetMapping("/invite")
+	public ModelAndView invite(Principal principal) {
+		ModelAndView mv = new ModelAndView("invite");
+		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+		mv.addObject("user", user);
+		return mv;
 	}
 	
 	
