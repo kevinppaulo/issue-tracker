@@ -64,9 +64,9 @@
 		
 		<h5>Comments</h5>
 		<div th:unless="${issue.issueStatus.name() == 'CLOSED'}">
-			<form method="post"
+			<form class="needs-validation" method="post"
 				th:action="@{'/issues/'+${issue.issueId} + '/comments'}">
-				<textarea rows="5" style="width: 100%" name="content"
+				<textarea required rows="5" style="width: 100%" name="content"
 					placeholder="Lorem ipsum dolor sid amet"></textarea>
 				<button class="btn btn-primary">Submit</button>
 			</form>
