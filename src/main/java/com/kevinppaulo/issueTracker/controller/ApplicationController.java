@@ -32,16 +32,25 @@ public class ApplicationController {
 		return mv;
 	}
 	
+	@GetMapping("error")
+	public String  error() {
+		return "error";
+	}
+	
 	
 	@GetMapping("app")
 	public ModelAndView dashboard(Principal principal) {
-		ModelAndView mv = new ModelAndView("dashboard");
 		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+		if(user.getOrganization() == null) {
+			ModelAndView newOrganization = new ModelAndView("new-organization");
+			return newOrganization;
+		}
+		ModelAndView mv = new ModelAndView("dashboard");
 		mv.addObject("user", user);
 		return mv;
 	}
 	
-	@GetMapping("newOrganization")
+	@GetMapping("new-organization")
 	public String newOrganization() {
 		return "new-organization";
 	}
@@ -52,7 +61,7 @@ public class ApplicationController {
 		if(user.getOrganization() != null) {
 			return "redirect:/app";
 		}
-		return "redirect:/newOrganization";
+		return "redirect:/new-organization";
 	}
 	
 	

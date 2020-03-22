@@ -8,7 +8,7 @@
 
 	<nav class="navbar mb-3 navbar-expand-sm navbar-dark bg-primary">
 
-		<a class="navbar-brand" href="#">Issue Tracker</a>
+		<a class="navbar-brand" href="/app">Issue Tracker</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -17,19 +17,15 @@
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-			
-			
-				<li class="nav-item ">
+				<li th:if="${user != null}" class="nav-item ">
 					<a class="nav-link" href="/app">Home
 						<span class="sr-only"></span>
 					</a>
 				</li>
-				
-				<li class="nav-item ">
+				<li th:if="${user != null}" class="nav-item ">
 					<a class="nav-link" href="/invite">Invite
 					</a>
 				</li>
-			
 			</ul>
 			
 			<div th:if="${user != null}">

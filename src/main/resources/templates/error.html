@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<th:block th:include="fragments/bootstrap-css::bootstrap-css"></th:block>
+<title>Error</title>
+</head>
+<body>
+	<div class="d-flex flex-column justify-content-center align-items-center" style="height: 100vh">
+		<h1>Hey, looks like you found our error page</h1>
+		<img class="m-5"style="max-width: 300px; width: 80%;" src="/img/warning.svg"/>
+		<h5>If that's what you were looking for...Congratulations!<br/>If not, sorry...this page is still under construction. <a href="/app">Click here to go back home</a></a></h5>
+	</div>
+	
+	<th:block th:include="fragments/bootstrap-js::bootstrap-js"></th:block>
+</body>
+</html>

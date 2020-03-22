@@ -30,7 +30,7 @@ public class ApplicationSecurityConfigurer extends WebSecurityConfigurerAdapter 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.GET,"/signup", "/signup/**", "/css/**", "/js/**", "/h2-console/**").permitAll()
+			.antMatchers(HttpMethod.GET,"/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/h2-console/**", "/error").permitAll()
 			.antMatchers(HttpMethod.POST,"/signup", "/signup/**", "/h2-console/**").permitAll()
 			.anyRequest()
 			.authenticated()
