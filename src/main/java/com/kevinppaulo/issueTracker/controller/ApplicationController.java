@@ -54,7 +54,7 @@ public class ApplicationController {
 	public ModelAndView dashboard(Principal principal) {
 		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
 		Optional<Organization> usersOrganization = organizationRepo.findByUsers_UserId(user.getUserId());
-		if(usersOrganization.isEmpty()) {
+		if(usersOrganization.get() != null) {
 			System.out.println("shit's emtpy bro");
 			ModelAndView newOrganization = new ModelAndView("new-organization");
 			return newOrganization;
@@ -76,7 +76,7 @@ public class ApplicationController {
 	public String checkIfUserHasOrganizations(Principal principal) {
 		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
 		Optional<Organization> usersOrganization = organizationRepo.findByUsers_UserId(user.getUserId());
-		if(usersOrganization.isEmpty()) {
+		if(usersOrganization.get() != null) {
 			return "redirect:/app";
 		}
 		return "redirect:/new-organization";
