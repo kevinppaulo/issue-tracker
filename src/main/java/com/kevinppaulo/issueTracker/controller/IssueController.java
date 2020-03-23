@@ -73,11 +73,28 @@ public class IssueController {
 		issue.setIssueId(originalIssue.getIssueId());
 		issue.setCreatedAt(originalIssue.getCreatedAt());
 		issue.setLastUpdated(new Date());
+		issue.setOrganization(originalIssue.getOrganization());
 		if(issue.getIssueStatus() == IssueStatus.CLOSED) {
 			issue.setClosedAt(new Date());
 		}
 		issueRepo.save(issue);
 		return "redirect:/issues/"+issueId;
+	}
+	
+	@PostMapping("/{issueId}/delete")
+	public String deleteIssue(@PathVariable("issueId") Long issueId, @Valid Issue issue, BindingResult bindingResult, Principal principal) {
+		if(bindingResult.hasErrors()) {
+			//TODO: actually do something here...
+			System.out.println(bindingResult.getAllErrors());
+			System.out.println("Errors were found");
+			return "redirect:/issues/"+issueId;
+		}
+		
+		
+		Issue foundIssue = issueRepo.findById(issueId).orElseThrow(RuntimeException::new);
+		
+		issueRepo.deleteById(issueId);
+		return "redirect:/app";
 	}
 	
 	

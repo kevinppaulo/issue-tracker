@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +27,6 @@ public class Organization {
 	private String name;
 	private String description;
 	@OneToMany
-	private List<Issue> issues;
-	
-	public void addIssue(Issue issue) {
-		issues.add(issue);
-	}
+	List<ApplicationUser> users;
 	
 }

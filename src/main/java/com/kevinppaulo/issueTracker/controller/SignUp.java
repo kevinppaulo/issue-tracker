@@ -1,5 +1,8 @@
 package com.kevinppaulo.issueTracker.controller;
 
+
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,8 +85,13 @@ public class SignUp {
 		user.setAccountNonLocked(true);
 		user.setEnabled(true);
 		user.setRole(ApplicationUserRole.ADMIN);
-		user.setOrganization(organization);
 		appUserRepo.save(user);
+		
+		List<ApplicationUser> organizationUsers = organization.getUsers();
+		organizationUsers.add(user);
+		organization.setUsers(organizationUsers);
+		organizationRepo.save(organization);
+		
 		return "redirect:/login";
 	}
 	

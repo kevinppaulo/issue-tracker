@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <th:block th:include="fragments/bootstrap-css::bootstrap-css"></th:block>
-<title th:text="${'Issue tracker - ' + user.organization.name}"></title>
+<title th:text="${'Issue tracker - ' + organization.name}"></title>
 </head>
 <body>
 	<th:block th:include="fragments/navbar::navbar"></th:block>
 		
-	<div th:if="${#lists.isEmpty(user.organization.issues)}">
+	<div th:if="${#lists.isEmpty(issues)}">
 		<div class="mt-5 d-flex flex-column justify-content-center align-items-center">
-			<h2 th:text="${'Hurray! Looks like ' + user.organization.name +' has no issues.'}"></h2>
+			<h2 th:text="${'Hurray! Looks like ' + organization.name +' has no issues.'}"></h2>
 			<img src="/img/chilling.svg" style="max-width: 200px; width: 100%; height: auto"/>
 		</div>
 	</div>
 	
 	
-	<div th:if="${not #lists.isEmpty(user.organization.issues)}" class="container mt-5">
-		<h3 th:text="${'issues in '+user.organization.name}"></h3>
+	<div th:if="${not #lists.isEmpty(issues)}" class="container mt-5">
+		<h3 th:text="${'issues in '+organization.name}"></h3>
 		<table  class="table table-striped table-hover">
 			<thead>
 				<tr>
@@ -30,7 +30,7 @@
 				</tr>
 			</thead>
 			<tbody >
-				<tr th:each="issue: ${user.organization.issues}">
+				<tr th:each="issue: ${issues}">
 					<td th:text="${'#'+issue.issueId}"></td>
 					<td><a th:href="@{'/issues/' + ${issue.issueId}}" th:text="${issue.title}"></a></td>
 					<td th:text="${#strings.abbreviate(issue.description, 70)}"></td>
@@ -44,5 +44,7 @@
 	
 	
 	<th:block th:include="fragments/bootstrap-js::bootstrap-js"></th:block>
+
+
 </body>
 </html>

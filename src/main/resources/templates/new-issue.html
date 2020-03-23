@@ -12,7 +12,7 @@
 		<div class="card-body">
 			<h4 class="card-title">New Issue</h4>
 			
-			<form method="post" class="needs-validation" autocomplete="off" th:action="@{'/organization/' + ${user.organization.organizationId} + '/issues/new'}" role="form">
+			<form method="post" class="needs-validation" autocomplete="off" th:action="@{'/organization/' + ${organization.organizationId} + '/issues/new'}" role="form">
 				<div class="form-group">
 					<label for="title">Issue title</label>
 					<input required type="text" class="form-control" name="title" id="title">

@@ -29,7 +29,7 @@
 			</ul>
 			
 			<div th:if="${user != null}">
-				<a class="btn btn-warning mr-2" th:href="@{'/organization/' + ${user.organization.organizationId} + '/issues/new'}">New Issue</a>
+				<a class="btn btn-warning mr-2" th:href="@{'/organization/' + ${organization.organizationId} + '/issues/new'}">New Issue</a>
 			</div>
 			
 			<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">

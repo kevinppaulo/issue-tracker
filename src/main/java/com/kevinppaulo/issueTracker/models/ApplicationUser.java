@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -43,9 +45,6 @@ public class ApplicationUser {
 	private String firstName;
 	private String lastName;
 	private String bio;
-	@ManyToOne
-	@JoinColumn(name = "user_organization")
-	private Organization organization;
 	
 	
 	private ApplicationUserRole role;

@@ -16,7 +16,7 @@
 				<div class="card-header">Invitation</div>
 				<div class="card-body">
 					<h5 class="card-title">Copy this link and send it to your coworkers</h5>
-					<input style="width: 100%" class="p-1 mb-2 linkToCopy" th:value="${'https://kevinppaulo-issue-tracker.herokuapp.com/signup/' + user.organization.organizationId}">
+					<input style="width: 100%" class="p-1 mb-2 linkToCopy" th:value="${'https://kevinppaulo-issue-tracker.herokuapp.com/signup/' + organization.organizationId}">
 					<button id="copyToClipboard" class="btn btn-primary">Copy to clipboard</button>
 				</div>
 			</div>
