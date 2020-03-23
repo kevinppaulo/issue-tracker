@@ -73,6 +73,7 @@ public class IssueController {
 		issue.setIssueId(originalIssue.getIssueId());
 		issue.setCreatedAt(originalIssue.getCreatedAt());
 		issue.setLastUpdated(new Date());
+		issue.setOrganization(originalIssue.getOrganization());
 		if(issue.getIssueStatus() == IssueStatus.CLOSED) {
 			issue.setClosedAt(new Date());
 		}

@@ -45,10 +45,6 @@ public class ApplicationUser {
 	private String firstName;
 	private String lastName;
 	private String bio;
-	@ManyToOne
-	@JoinColumn(name = "user_organization")
-	@Cascade(CascadeType.REMOVE)
-	private Organization organization;
 	
 	
 	private ApplicationUserRole role;

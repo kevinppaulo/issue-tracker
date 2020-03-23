@@ -27,11 +27,6 @@ public class Organization {
 	private String name;
 	private String description;
 	@OneToMany
-	@Cascade(CascadeType.ALL)
-	private List<Issue> issues;
-	
-	public void addIssue(Issue issue) {
-		issues.add(issue);
-	}
+	List<ApplicationUser> users;
 	
 }

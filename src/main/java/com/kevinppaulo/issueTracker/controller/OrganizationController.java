@@ -1,7 +1,9 @@
 package com.kevinppaulo.issueTracker.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -45,7 +47,9 @@ public class OrganizationController {
 	@PostMapping("/new")
 	public String addNewOrganization(@Valid Organization organization, BindingResult result, Principal principal) {
 		ApplicationUser applicationUser = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
-		applicationUser.setOrganization(organization);
+		List<ApplicationUser> organizationUsers = new ArrayList<ApplicationUser>();
+		organizationUsers.add(applicationUser);
+		organization.setUsers(organizationUsers);
 		organizationRepo.save(organization);
 		appUserRepo.save(applicationUser);
 		System.out.println("Saving organization" + organization);
@@ -61,10 +65,12 @@ public class OrganizationController {
 	}
 	
 	@GetMapping("/{organizationId}/issues/new")
-	public ModelAndView getAddNewIssue(Principal principal) {
+	public ModelAndView getAddNewIssue(@PathVariable("organizationId") Long organizationId, Principal principal) {
 		ModelAndView mv = new ModelAndView("new-issue");
 		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+		Organization organization = organizationRepo.findById(organizationId).orElseThrow(RuntimeException::new);
 		mv.addObject("user", user);
+		mv.addObject("organization", organization);
 		return mv;
 	}
 	
@@ -77,11 +83,8 @@ public class OrganizationController {
 		issue.setIssueStatus(IssueStatus.OPEN);
 		issue.setCreatedAt(new Date());
 		Organization organization = organizationRepo.findById(organizationId).orElseThrow(RuntimeException::new);
-		organization.addIssue(issue);
+		issue.setOrganization(organization);
 		issueRepo.save(issue);
-		organizationRepo.save(organization);
-		
-		System.out.println(organization);
 		return "redirect:/app";
 	}
 	

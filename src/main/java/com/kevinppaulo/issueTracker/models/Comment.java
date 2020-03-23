@@ -31,7 +31,7 @@ public class Comment {
 	private String content;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date addedAt;
-	@ManyToOne(cascade = CascadeType.DETACH)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "comment_issue")
 	private Issue issue;
 	@ManyToOne
