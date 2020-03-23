@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode
 public class Issue {
 	@Id
 	@GeneratedValue
@@ -36,6 +38,7 @@ public class Issue {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdated;
 	private IssueStatus issueStatus;
+	
 	
 	@Transient
 	private String badgeColor;

@@ -14,9 +14,16 @@
 			<form id="titleForm" method="post" th:action="@{'/issues/' + ${issue.issueId} + '/edit'}">
 				<input class="border-left-0 border-top-0 border-right-0" type="text" name="title" th:value="${issue.title}">
 				<input type="hidden" name="issueStatus" th:value="${issue.issueStatus}">
-					
 				<input type="hidden" name="issueId" th:value="${issue.issueId}">
 				<input type="hidden" name="description" th:value="${issue.description}">
+			</form>
+			
+			<form id="deleteIssue" method="post" th:action="@{'/issues/' + ${issue.issueId} + '/delete'}">
+				<input type="hidden" name="title" th:value="${issue.title}">
+				<input type="hidden" name="issueStatus" th:value="${issue.issueStatus}">
+				<input type="hidden" name="issueId" th:value="${issue.issueId}">
+				<input type="hidden" name="description" th:value="${issue.description}">
+				<button type="submit" class="btn btn-outline-danger">Delete issue</button>
 			</form>
 		</div>
 			

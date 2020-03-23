@@ -80,6 +80,22 @@ public class IssueController {
 		return "redirect:/issues/"+issueId;
 	}
 	
+	@PostMapping("/{issueId}/delete")
+	public String deleteIssue(@PathVariable("issueId") Long issueId, @Valid Issue issue, BindingResult bindingResult, Principal principal) {
+		if(bindingResult.hasErrors()) {
+			//TODO: actually do something here...
+			System.out.println(bindingResult.getAllErrors());
+			System.out.println("Errors were found");
+			return "redirect:/issues/"+issueId;
+		}
+		
+		
+		Issue foundIssue = issueRepo.findById(issueId).orElseThrow(RuntimeException::new);
+		
+		issueRepo.deleteById(issueId);
+		return "redirect:/app";
+	}
+	
 	
 	@PostMapping("/{issueId}/comments")
 	public String addNewComment(@PathVariable("issueId") Long issueId, @Valid Comment comment, BindingResult bindingResult, Principal principal) {
