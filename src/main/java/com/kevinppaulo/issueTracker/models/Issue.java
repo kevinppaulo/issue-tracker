@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -28,7 +29,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class Issue {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long issueId;
 	private String title;
 	@Column(length = 10000)
@@ -41,7 +42,7 @@ public class Issue {
 	private Date lastUpdated;
 	private IssueStatus issueStatus;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH)
+	@ManyToOne
 	Organization organization;
 	
 	

@@ -37,7 +37,7 @@ public class ApplicationSecurityConfigurer extends WebSecurityConfigurerAdapter 
 			.and()
 			.formLogin()
 			.loginPage("/login").permitAll()
-			.defaultSuccessUrl("/userOrganizationCheck", true)
+			.defaultSuccessUrl("/app", true)
 			.and()
 			.logout()
 				.logoutUrl("/logout").permitAll()

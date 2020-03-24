@@ -55,7 +55,6 @@ public class ApplicationController {
 		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
 		Optional<Organization> usersOrganization = organizationRepo.findByUsers_UserId(user.getUserId());
 		if(usersOrganization.isEmpty()) {
-			System.out.println("shit's emtpy bro");
 			ModelAndView newOrganization = new ModelAndView("new-organization");
 			return newOrganization;
 		}

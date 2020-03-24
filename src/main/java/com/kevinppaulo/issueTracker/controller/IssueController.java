@@ -89,11 +89,8 @@ public class IssueController {
 			System.out.println("Errors were found");
 			return "redirect:/issues/"+issueId;
 		}
-		
-		
 		Issue foundIssue = issueRepo.findById(issueId).orElseThrow(RuntimeException::new);
-		
-		issueRepo.deleteById(issueId);
+		issueRepo.delete(foundIssue);
 		return "redirect:/app";
 	}
 	
