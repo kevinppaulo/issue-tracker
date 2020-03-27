@@ -58,10 +58,15 @@ public class OrganizationController {
 	
 	
 	
-	@GetMapping("/{organizationId}/issues")
-	public ModelAndView allOrganizationIssues() {
-		ModelAndView mv = new ModelAndView("organization-issues");
+	@GetMapping("/{organizationId}")
+	public ModelAndView allOrganizationIssues(@PathVariable("organizationId") Long organizationId, Principal principal) {
+		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+		Organization organization = organizationRepo.findAllByUsers_UserId(user.getUserId()).stream().filter(org -> org.getOrganizationId() == organizationId).findFirst().orElseThrow(RuntimeException::new);
 		
+		ModelAndView mv = new ModelAndView("organization-details");
+		mv.addObject("user", user);
+		mv.addObject("organization", organization);
+
 		return mv;
 	}
 	

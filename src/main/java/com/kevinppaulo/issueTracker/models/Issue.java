@@ -60,7 +60,9 @@ public class Issue {
 		case IN_PROGRESS:
 			return "info";
 		case CLOSED:
-			return "secondary";
+			return "success";
+		case RESOLVED:
+			return "success";
 		default:
 			return "primary";
 		}

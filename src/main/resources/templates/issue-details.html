@@ -9,15 +9,15 @@
 	<th:block th:include="fragments/navbar::navbar"></th:block>
 
 	<div class="container mt-5 pb-5">
-		<h4 class="display-4">
-			<div class="form-inline">
+		<div class="form-group">
 			<form id="titleForm" method="post" th:action="@{'/issues/' + ${issue.issueId} + '/edit'}">
-				<input class="border-left-0 border-top-0 border-right-0" type="text" name="title" th:value="${issue.title}">
+				<input class="form-control form-control-lg border-left-0 border-top-0 border-right-0" type="text" name="title" th:value="${issue.title}">
 				<input type="hidden" name="issueStatus" th:value="${issue.issueStatus}">
 				<input type="hidden" name="issueId" th:value="${issue.issueId}">
 				<input type="hidden" name="description" th:value="${issue.description}">
 			</form>
-			
+		</div>
+		<div class="form-group">
 			<form id="deleteIssue" method="post" th:action="@{'/issues/' + ${issue.issueId} + '/delete'}">
 				<input type="hidden" name="title" th:value="${issue.title}">
 				<input type="hidden" name="issueStatus" th:value="${issue.issueStatus}">
@@ -27,7 +27,6 @@
 			</form>
 		</div>
 			
-		</h4>
 		<h6 class="text-muted"
 			th:text="${'Issue opened in '+#dates.format(issue.createdAt, 'dd/MM/yyyy - HH:mm:ss')}"></h6>
 		
@@ -36,7 +35,7 @@
 			<form id="statusForm" method="post" th:action="@{'/issues/' + ${issue.issueId} + '/edit'}">
 				 <select name="issueStatus" class="ml-2 form-control" id="status-select">
 					<option value="OPEN" th:selected="${issue.issueStatus.name() == 'OPEN'}">OPEN</option>
-					<option value="CLOSED" th:selected="${issue.issueStatus.name() == 'CLOSED'}">CLOSED</option>
+					<option value="RESOLVED" th:selected="${issue.issueStatus.name() == 'RESOLVED'}">RESOLVED</option>
 					<option value="IN_PROGRESS" th:selected="${issue.issueStatus.name() == 'IN_PROGRESS'}">IN PROGRESS</option>
 				</select>
 				<input type="hidden" name="issueId" th:value="${issue.issueId}">
@@ -70,7 +69,7 @@
 		<hr />
 		
 		<h5>Comments</h5>
-		<div th:unless="${issue.issueStatus.name() == 'CLOSED'}">
+		<div th:unless="${issue.issueStatus.name() == 'CLOSED' || issue.issueStatus.name() == 'RESOLVED'}">
 			<form class="needs-validation" method="post"
 				th:action="@{'/issues/'+${issue.issueId} + '/comments'}">
 				<textarea required rows="5" style="width: 100%" name="content"

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<th:block th:include="fragments/bootstrap-css::bootstrap-css"></th:block>
+<title th:text="${'Issue tracker'}"></title>
+</head>
+<body>
+	<th:block th:include="fragments/navbar::navbar"></th:block>
+
+
+	<div class="container mt-5">
+
+			<h3 th:text="${'issues in '+organization.name}"></h3>
+			<div class="table-responsive">
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Issue title</th>
+							<th>Issue description</th>
+							<th>Opened at</th>
+							<th>Last updated</th>
+							<th>Comments</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="issue: ${organization.issues}">
+							<td th:text="${'#'+issue.issueId}"></td>
+							<td><a th:href="@{'/issues/' + ${issue.issueId}}"
+								th:text="${issue.title}"></a></td>
+							<td th:title="${issue.description}" th:text="${#strings.abbreviate(issue.description, 35)}"></td>
+							<td th:text="${#dates.format(issue.createdAt, 'dd/MM/yyyy')}"></td>
+							<td
+								th:text="${issue.lastUpdated} ? ${#dates.format(issue.lastUpdated, 'dd/MM/yyyy')} : 'never'"></td>
+							<td th:text="${issue.getComments().size()}"></td>
+							<td><span
+								th:class="${'badge badge-pill badge-'+issue.badgeColor}"
+								th:text="${issue.issueStatus}"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
+	<th:block th:include="fragments/bootstrap-js::bootstrap-js"></th:block>
+
+
+</body>
+</html>
