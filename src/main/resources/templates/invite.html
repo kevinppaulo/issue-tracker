@@ -9,14 +9,23 @@
 	<th:block th:include="fragments/navbar::navbar"></th:block>
 
 	<div class="container">
+	
+		
 
 		<div class="mt-4" style="width: 90%; max-width: 600px; margin: auto">
 			<h3 class="display-4">Work together.</h3>
 			<div class="card mb-3 mt-3">
-				<div class="card-header">Invitation</div>
+				<div class="card-header">
+					Invite to:
+					<select id="invite-to" class="form-control">
+						<th:block th:each="organization: ${organizations}">
+							<option th:text="${organization.name}" th:value="${organization.organizationId}"></option>
+						</th:block>
+					</select>	
+				</div>
 				<div class="card-body">
 					<h5 class="card-title">Copy this link and send it to your coworkers</h5>
-					<input style="width: 100%" class="p-1 mb-2 linkToCopy" th:value="${'https://kevinppaulo-issue-tracker.herokuapp.com/signup/' + organization.organizationId}">
+					<input style="width: 100%" class="p-1 mb-2 linkToCopy">
 					<button id="copyToClipboard" class="btn btn-primary">Copy to clipboard</button>
 				</div>
 			</div>
@@ -30,6 +39,16 @@
 	</div>
 	<th:block th:include="fragments/bootstrap-js::bootstrap-js"></th:block>
 	<script>
+		const initialUrlValue = $('#invite-to').val();
+		const url = `https://kevinppaulo-issue-tracker.herokuapp.com/signup/${initialUrlValue}`;
+		$(".linkToCopy").val(url);
+	
+		$("#invite-to").on('change', (event)=>{
+			const url = `https://kevinppaulo-issue-tracker.herokuapp.com/signup/${event.target.value}`;
+			$(".linkToCopy").val(url);
+		});
+	
+	
 		$('#copyToClipboard').click(function(){
 		    $(this).siblings('input.linkToCopy').select();      
 		    document.execCommand("copy");

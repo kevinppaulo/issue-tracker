@@ -37,11 +37,10 @@ public class ApplicationController {
 	@GetMapping("/invite")
 	public ModelAndView invite(Principal principal) {
 		ModelAndView mv = new ModelAndView("invite");
-//		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
-//		Organization organization = organizationRepo.findByUsers_UserId(user.getUserId())
-//				.orElseThrow(RuntimeException::new);
+		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+		List<Organization> organizations = organizationRepo.findAllByUsers_UserId(user.getUserId());
 //		mv.addObject("user", user);
-//		mv.addObject("organization", organization);
+		mv.addObject("organizations", organizations);
 		return mv;
 	}
 
