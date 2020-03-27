@@ -26,10 +26,15 @@
 					<a class="nav-link" href="/invite">Invite
 					</a>
 				</li>
+				
+				<li th:if="${user != null}" class="nav-item ">
+					<a class="nav-link" href="/new-organization">New Organization
+					</a>
+				</li>
 			</ul>
 			
 			<div th:if="${user != null}">
-				<a class="btn btn-warning mr-2" th:href="@{'/organization/' + ${organization.organizationId} + '/issues/new'}">New Issue</a>
+				<a class="btn btn-warning mr-2" th:href="@{'/issues/new'}">New Issue</a>
 			</div>
 			
 			<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">

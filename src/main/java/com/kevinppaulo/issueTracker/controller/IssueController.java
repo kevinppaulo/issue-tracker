@@ -22,6 +22,7 @@ import com.kevinppaulo.issueTracker.models.Comment;
 import com.kevinppaulo.issueTracker.models.Issue;
 import com.kevinppaulo.issueTracker.models.IssueStatus;
 import com.kevinppaulo.issueTracker.models.Organization;
+import com.kevinppaulo.issueTracker.models.dto.IssueAndOrganizationIdDto;
 import com.kevinppaulo.issueTracker.repository.ApplicationUserJpaRepository;
 import com.kevinppaulo.issueTracker.repository.CommentJpaRepository;
 import com.kevinppaulo.issueTracker.repository.IssueJpaRepository;
@@ -80,6 +81,25 @@ public class IssueController {
 		issueRepo.save(issue);
 		return "redirect:/issues/"+issueId;
 	}
+	
+	@GetMapping("/new")
+	public ModelAndView newIssue(Principal principal) {
+		ModelAndView mv = new ModelAndView("new-issue");
+		ApplicationUser user = userRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+		List<Organization> usersOrganizations = organizationRepo.findAllByUsers_UserId(user.getUserId());
+		mv.addObject("organizations", usersOrganizations);
+		return mv;
+	}
+	
+	@PostMapping("/new")
+	public String newIssuePost(@Valid IssueAndOrganizationIdDto issueAndOrganization) {
+		System.out.println("I'm getting in ");
+		Organization organization = organizationRepo.findById(issueAndOrganization.getOrganizationId()).orElseThrow(RuntimeException::new);
+		Issue newIssue = new Issue(null, issueAndOrganization.getTitle(), issueAndOrganization.getDescription(), new Date(), null, null, IssueStatus.OPEN, organization, null, null);
+		issueRepo.save(newIssue);
+		return "redirect:/app";
+	}
+	
 	
 	@PostMapping("/{issueId}/delete")
 	public String deleteIssue(@PathVariable("issueId") Long issueId, @Valid Issue issue, BindingResult bindingResult, Principal principal) {

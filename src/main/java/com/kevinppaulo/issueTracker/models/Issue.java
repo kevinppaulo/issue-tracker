@@ -45,7 +45,9 @@ public class Issue {
 	@ManyToOne
 	Organization organization;
 	
-	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "issue")
+	List<Comment> comments;
+
 	@Transient
 	private String badgeColor;
 	
@@ -62,5 +64,9 @@ public class Issue {
 		default:
 			return "primary";
 		}
+	}
+	
+	public int getNumberOfComments() {
+		return this.comments.size();
 	}
 }

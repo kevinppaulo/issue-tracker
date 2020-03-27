@@ -61,18 +61,10 @@ public class OrganizationController {
 	@GetMapping("/{organizationId}/issues")
 	public ModelAndView allOrganizationIssues() {
 		ModelAndView mv = new ModelAndView("organization-issues");
+		
 		return mv;
 	}
 	
-	@GetMapping("/{organizationId}/issues/new")
-	public ModelAndView getAddNewIssue(@PathVariable("organizationId") Long organizationId, Principal principal) {
-		ModelAndView mv = new ModelAndView("new-issue");
-		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
-		Organization organization = organizationRepo.findById(organizationId).orElseThrow(RuntimeException::new);
-		mv.addObject("user", user);
-		mv.addObject("organization", organization);
-		return mv;
-	}
 	
 	@PostMapping("/{organizationId}/issues/new")
 	public String postAddNewIssue(@PathVariable("organizationId") Long organizationId,  @Valid Issue issue, BindingResult result, Principal principal) {

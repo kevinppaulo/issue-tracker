@@ -20,11 +20,11 @@ import com.kevinppaulo.issueTracker.repository.OrganizationJpaRepository;
 @Controller
 @RequestMapping("/")
 public class ApplicationController {
-	
+
 	private final ApplicationUserJpaRepository appUserRepo;
 	private final OrganizationJpaRepository organizationRepo;
 	private final IssueJpaRepository issueRepo;
-	
+
 	@Autowired
 	public ApplicationController(ApplicationUserJpaRepository appUserRepo, OrganizationJpaRepository organizationRepo,
 			IssueJpaRepository issueRepo) {
@@ -37,50 +37,39 @@ public class ApplicationController {
 	@GetMapping("/invite")
 	public ModelAndView invite(Principal principal) {
 		ModelAndView mv = new ModelAndView("invite");
-		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
-		Organization organization = organizationRepo.findByUsers_UserId(user.getUserId()).orElseThrow(RuntimeException::new);
-		mv.addObject("user", user);
-		mv.addObject("organization", organization);
+//		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
+//		Organization organization = organizationRepo.findByUsers_UserId(user.getUserId())
+//				.orElseThrow(RuntimeException::new);
+//		mv.addObject("user", user);
+//		mv.addObject("organization", organization);
 		return mv;
 	}
-	
+
 	@GetMapping("error")
-	public String  error() {
+	public String error() {
 		return "error";
 	}
-	
-	
+
 	@GetMapping("app")
 	public ModelAndView dashboard(Principal principal) {
 		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
-		Optional<Organization> usersOrganization = organizationRepo.findByUsers_UserId(user.getUserId());
-		if(usersOrganization.isEmpty()) {
-			ModelAndView newOrganization = new ModelAndView("new-organization");
-			return newOrganization;
-		}
-		List<Issue> issues = issueRepo.findAllByOrganization_OrganizationId(usersOrganization.get().getOrganizationId());
+		List<Organization> organizations = organizationRepo.findAllByUsers_UserId(user.getUserId());
+		if (organizations.isEmpty())
+			return new ModelAndView("new-organization");
+
+		
 		ModelAndView mv = new ModelAndView("dashboard");
+
 		mv.addObject("user", user);
-		mv.addObject("organization", usersOrganization.get());
-		mv.addObject("issues", issues);
+		mv.addObject("organizations", organizations);
+
 		return mv;
 	}
-	
+
 	@GetMapping("new-organization")
 	public String newOrganization() {
 		return "new-organization";
 	}
-	
-	@GetMapping("userOrganizationCheck")
-	public String checkIfUserHasOrganizations(Principal principal) {
-		ApplicationUser user = appUserRepo.findByUsername(principal.getName()).orElseThrow(RuntimeException::new);
-		Optional<Organization> usersOrganization = organizationRepo.findByUsers_UserId(user.getUserId());
-		if(usersOrganization.isEmpty()) {
-			return "redirect:/app";
-		}
-		return "redirect:/new-organization";
-	}
-	
-	
+
 
 }
