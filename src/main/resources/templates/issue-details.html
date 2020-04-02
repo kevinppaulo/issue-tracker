@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
@@ -23,7 +23,7 @@
 				<input type="hidden" name="issueStatus" th:value="${issue.issueStatus}">
 				<input type="hidden" name="issueId" th:value="${issue.issueId}">
 				<input type="hidden" name="description" th:value="${issue.description}">
-				<button type="submit" class="btn btn-outline-danger">Delete issue</button>
+				<button type="submit" class="btn btn-outline-danger ">Delete issue</button>
 			</form>
 		</div>
 			
@@ -48,7 +48,7 @@
 		
 
 		<div id="description-area">
-			<p th:text="${issue.description}"></p>
+			<p th:utext="${issue.description}"></p>
 			<button id="editBtn" class="btn btn-primary mb-2">Edit</button>
 		</div>		
 		
@@ -74,7 +74,7 @@
 				th:action="@{'/issues/'+${issue.issueId} + '/comments'}">
 				<textarea required rows="5" style="width: 100%" name="content"
 					placeholder="Lorem ipsum dolor sid amet"></textarea>
-				<button class="btn btn-primary">Submit</button>
+				<button class="btn btn-primary mt-3">Submit</button>
 			</form>
 		</div>
 
@@ -97,7 +97,7 @@
 					</div>
 
 					<div class="card-body">
-						<p th:text="${comment.content}"></p>
+						<th:block th:utext="${comment.content}"></th:block>
 					</div>
 				</div>
 			</div>
@@ -130,6 +130,8 @@
 			$("#description-area").show();
 			$("#description-form-area").hide();
 		});
+		
+		$('textarea').summernote();
 	</script>
 	
 </body>

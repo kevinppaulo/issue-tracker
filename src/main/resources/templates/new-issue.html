@@ -8,7 +8,7 @@
 <body>
 	<th:block th:include="fragments/navbar::navbar"></th:block>
 	
-	<div class="card ml-auto mt-5 mr-auto" style="width: 18rem;">
+	<div class="card ml-auto mt-5 mr-auto" style="width: 80%;">
 		<div class="card-body">
 			<h4 class="card-title">New Issue</h4>
 			
@@ -29,7 +29,7 @@
 				
 				<div class="form-group">
 					<label for="description">Description</label>
-					<textarea required name="description" id="description" rows="6" style="width: 100%"></textarea>
+					<textarea required name="description" id="description" rows="18" style="width: 100%;"></textarea>
 				</div>
 				
 				<button type="submit" class="btn btn-primary btn-block">Report issue</button>
@@ -38,5 +38,8 @@
 	</div>
 	
 	<th:block th:include="fragments/bootstrap-js::bootstrap-js"></th:block>
+	<script>
+		$('textarea').summernote();
+	</script>
 </body>
 </html>
